@@ -37,9 +37,14 @@ data class RealtimeWeatherResponse(val status: String, val result: Result) {
 
             }
 
-            data class AirQuality(val aqi: AQI) {
+            data class AirQuality(
+                val aqi: AQI,
+                val description: Description
+            ) {
 
                 data class AQI(val chn: Float)
+
+                data class Description(val chn: String)
 
             }
 

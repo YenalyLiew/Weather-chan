@@ -8,9 +8,9 @@ import com.yenaly.weatherchan.logic.model.PlaceResponse
 
 class WeatherViewModel : ViewModel() {
 
-    var locationLng = "NONE"
-    var locationLat = "NONE"
-    var placeName = "NONE"
+    var locationLng = ""
+    var locationLat = ""
+    var placeName = ""
 
     private val locationLiveData = MutableLiveData<PlaceResponse.Place.Location>()
     val weatherLiveData = Transformations.switchMap(locationLiveData) { location ->
