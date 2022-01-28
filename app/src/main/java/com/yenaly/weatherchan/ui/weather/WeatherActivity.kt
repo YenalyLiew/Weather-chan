@@ -1,26 +1,30 @@
 package com.yenaly.weatherchan.ui.weather
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yenaly.weatherchan.R
-import com.yenaly.weatherchan.databinding.ActivityWeatherBinding
 import com.yenaly.weatherchan.databinding.ActivityWeatherNewBinding
 import com.yenaly.weatherchan.logic.model.Sky
 import com.yenaly.weatherchan.logic.model.Weather
+import com.yenaly.weatherchan.ui.weather.adapter.ViewPagerAdapter
+import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 
-class WeatherActivity : AppCompatActivity() {
+class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
-    private lateinit var binding: ActivityWeatherNewBinding
-    private val viewModel by lazy { ViewModelProvider(this).get(WeatherViewModel::class.java) }
+    lateinit var binding: ActivityWeatherNewBinding
+    val viewModel by lazy { ViewModelProvider(this).get(WeatherViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +48,7 @@ class WeatherActivity : AppCompatActivity() {
             binding.swipeRefreshLayout.isEnabled = (verticalOffset >= 0)
         })
 
-
+        binding.drawerLayout.addDrawerListener(this)
 
         viewModel.weatherLiveData.observe(this) { result ->
             val weather = result.getOrNull()
@@ -63,7 +67,7 @@ class WeatherActivity : AppCompatActivity() {
 
     }
 
-    private fun refreshWeather() {
+    fun refreshWeather() {
         viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
         binding.swipeRefreshLayout.isRefreshing = true
     }
@@ -95,13 +99,31 @@ class WeatherActivity : AppCompatActivity() {
                 ViewPagerAdapter.PAGE_DAILY -> tab.text = "未来"
             }
         }.attach()
-        binding.swipeRefreshLayout.visibility = View.VISIBLE
+        binding.coordinatorLayout.visibility = View.VISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
+            R.id.city_added_list -> binding.drawerLayout.openDrawer(GravityCompat.END)
         }
         return true
     }
+
+    override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+    override fun onDrawerOpened(drawerView: View) {}
+
+    override fun onDrawerStateChanged(newState: Int) {}
+
+    override fun onDrawerClosed(drawerView: View) {
+        val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        manager.hideSoftInputFromWindow(drawerView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+
 }

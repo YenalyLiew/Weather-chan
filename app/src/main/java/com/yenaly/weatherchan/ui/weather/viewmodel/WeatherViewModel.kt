@@ -1,4 +1,4 @@
-package com.yenaly.weatherchan.ui.weather
+package com.yenaly.weatherchan.ui.weather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -20,5 +20,4 @@ class WeatherViewModel : ViewModel() {
     fun refreshWeather(lng: String, lat: String) {
         locationLiveData.value = PlaceResponse.Place.Location(lng, lat)
     }
-
 }

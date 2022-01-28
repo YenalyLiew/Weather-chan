@@ -39,15 +39,14 @@
             android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:backgroundTint="@android:color/transparent"
-            android:background="@drawable/ic_add"
+            android:background="@drawable/ic_delete"
             android:insetTop="0dp"
-            android:insetBottom="0dp"
-            app:cornerRadius="24dp" />
+            android:insetBottom="0dp" />
 
     </RelativeLayout>
 

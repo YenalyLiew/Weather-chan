@@ -10,8 +10,10 @@ class WeatherChanApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         // 建立全局Context
         lateinit var context: Context
-        // 建立全局TOKEN
+        // 建立全局TOKEN，彩云天气API
         const val TOKEN = "cAgKQqOVUXKQuJXC"
+        // 建立全局KEY，高德API
+        const val KEY = "ec0fab8dc40532806c5126c19112a34c"
     }
 
     override fun onCreate() {

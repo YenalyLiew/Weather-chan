@@ -1,8 +1,11 @@
-package com.yenaly.weatherchan.ui.weather
+package com.yenaly.weatherchan.ui.weather.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.yenaly.weatherchan.ui.weather.fragment.DailyWeatherFragment
+import com.yenaly.weatherchan.ui.weather.fragment.EmptyFragment
+import com.yenaly.weatherchan.ui.weather.fragment.RealtimeDetailedFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
@@ -20,7 +23,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
         return when (position) {
             PAGE_REALTIME -> RealtimeDetailedFragment
             PAGE_DAILY -> DailyWeatherFragment
-            else -> DailyWeatherFragment
+            else -> EmptyFragment
         }
     }
 }

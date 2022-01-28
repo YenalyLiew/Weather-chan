@@ -2,6 +2,8 @@ package com.yenaly.weatherchan.logic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.yenaly.weatherchan.logic.dao.PlaceDao
+import com.yenaly.weatherchan.logic.model.IPWithCityAndProvince
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.logic.network.WeatherChanNetwork
@@ -49,6 +51,26 @@ object Repository {
             }
         }
     }
+
+    fun getCurrentIP(): LiveData<Result<IPWithCityAndProvince>> {
+        return fire {
+            val currentIpResponse = WeatherChanNetwork.getCurrentIP()
+            if (currentIpResponse.status == "1") {
+                val currentIpRange = currentIpResponse.rectangle.split(";")
+                val province = currentIpResponse.province
+                val city = currentIpResponse.city
+                Result.success(IPWithCityAndProvince(city, province, currentIpRange[0]))
+            } else {
+                Result.failure(RuntimeException("Response Status is ${currentIpResponse.status}"))
+            }
+        }
+    }
+
+    fun savePlace(place: PlaceResponse.Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
 
     private fun <T> fire(
         context: CoroutineContext = Dispatchers.IO,

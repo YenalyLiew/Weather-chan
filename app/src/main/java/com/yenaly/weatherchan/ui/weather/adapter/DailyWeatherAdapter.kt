@@ -1,4 +1,4 @@
-package com.yenaly.weatherchan.ui.weather
+package com.yenaly.weatherchan.ui.weather.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.Sky
 import com.yenaly.weatherchan.logic.model.Weather
+import com.yenaly.weatherchan.ui.weather.fragment.DailyWeatherFragment
 import java.text.SimpleDateFormat
 import java.util.Locale
 

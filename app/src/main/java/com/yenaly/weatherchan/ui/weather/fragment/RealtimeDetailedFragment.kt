@@ -1,4 +1,4 @@
-package com.yenaly.weatherchan.ui.weather
+package com.yenaly.weatherchan.ui.weather.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yenaly.weatherchan.databinding.RealtimeWeatherDetailedBinding
 import com.yenaly.weatherchan.logic.model.Weather
+import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 
 object RealtimeDetailedFragment : Fragment() {
 
