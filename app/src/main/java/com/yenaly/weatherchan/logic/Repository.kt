@@ -2,6 +2,7 @@ package com.yenaly.weatherchan.logic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.yenaly.weatherchan.logic.dao.AddedPlaceDao
 import com.yenaly.weatherchan.logic.dao.PlaceDao
 import com.yenaly.weatherchan.logic.model.IPWithCityAndProvince
 import com.yenaly.weatherchan.logic.model.PlaceResponse
@@ -71,6 +72,15 @@ object Repository {
     fun getSavedPlace() = PlaceDao.getSavedPlace()
 
     fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
+    fun addPlaces(places: List<PlaceResponse.Place>) = AddedPlaceDao.addPlaces(places)
+
+    fun getAddedPlaces() = AddedPlaceDao.getAddedPlaces()
+
+    fun isPlaceAdded(place: PlaceResponse.Place, places: List<PlaceResponse.Place>) =
+        AddedPlaceDao.isPlaceAdded(place, places)
+
+    fun isPlacesAdded() = AddedPlaceDao.isPlacesAdded()
 
     private fun <T> fire(
         context: CoroutineContext = Dispatchers.IO,

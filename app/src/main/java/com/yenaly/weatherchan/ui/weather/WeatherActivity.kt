@@ -125,5 +125,4 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         manager.hideSoftInputFromWindow(drawerView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
-
 }

@@ -9,10 +9,15 @@ import com.yenaly.weatherchan.logic.model.PlaceResponse
 class PlaceViewModel : ViewModel() {
 
     val placeList = ArrayList<PlaceResponse.Place>()
+    val modifyLiveData = MutableLiveData<List<PlaceResponse.Place>>()
 
     private val searchLiveData = MutableLiveData<String>()
     val placeLiveDataObserver = Transformations.switchMap(searchLiveData) { query ->
         Repository.searchPlaces(query)
+    }
+
+    fun refreshSearch() {
+        modifyLiveData.value = placeList
     }
 
     fun searchPlaces(query: String) {

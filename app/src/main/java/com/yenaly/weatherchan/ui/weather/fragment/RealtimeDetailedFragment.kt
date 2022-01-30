@@ -15,15 +15,15 @@ object RealtimeDetailedFragment : Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }
     private lateinit var weather: Weather
-    private var _binding: RealtimeWeatherDetailedBinding? = null
-    private val binding get() = _binding!!
+    private var binding_: RealtimeWeatherDetailedBinding? = null
+    private val binding get() = binding_!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = RealtimeWeatherDetailedBinding.inflate(inflater, container, false)
+        binding_ = RealtimeWeatherDetailedBinding.inflate(inflater, container, false)
         viewModel.weatherLiveData.observe(requireActivity()) { result ->
             if (result.getOrNull() != null) {
                 weather = result.getOrNull()!!
@@ -60,7 +60,7 @@ object RealtimeDetailedFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        binding_ = null
     }
 
 }

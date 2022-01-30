@@ -3,7 +3,6 @@ package com.yenaly.weatherchan.ui.place
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yenaly.weatherchan.databinding.FragmentPlaceSearchBinding
 import com.yenaly.weatherchan.logic.model.PlaceResponse
+import com.yenaly.weatherchan.ui.added.AddedPlaceViewModel
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
 
 class PlaceSearchFragment : Fragment() {
 
-    val viewModelSearch by lazy { ViewModelProvider(this).get(PlaceViewModel::class.java) }
-    val viewModelIP by lazy { ViewModelProvider(this).get(CurrentIpViewModel::class.java) }
+    val viewModelSearch by lazy { ViewModelProvider(requireActivity()).get(PlaceViewModel::class.java) }
+    val viewModelIP by lazy { ViewModelProvider(requireActivity()).get(CurrentIpViewModel::class.java) }
+    val viewModelAdded by lazy { ViewModelProvider(requireActivity()).get(AddedPlaceViewModel::class.java) }
     private lateinit var adapter: PlaceSearchAdapter
     private var _binding: FragmentPlaceSearchBinding? = null
     private val binding get() = _binding!!
@@ -47,8 +48,9 @@ class PlaceSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
-        adapter = PlaceSearchAdapter(this, viewModelSearch.placeList)
-        binding.recyclerView.adapter = adapter
+        viewModelSearch.refreshSearch()
+
+        val tipOne = "未能查询到该地点"
 
         //激活CurrentIpViewModel
         viewModelIP.getCurrentIP()
@@ -77,18 +79,22 @@ class PlaceSearchFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             } else {
                 binding.searchTipText.visibility = View.VISIBLE
-                val tipOne = "未能查询到该地点"
                 binding.searchTipText.text = tipOne
                 result.exceptionOrNull()?.printStackTrace()
             }
         }
 
+        viewModelSearch.modifyLiveData.observe(viewLifecycleOwner) { placeList ->
+            adapter = PlaceSearchAdapter(this, placeList)
+            binding.recyclerView.adapter = adapter
+        }
+
         viewModelIP.currentIPLiveData.observe(viewLifecycleOwner) { result ->
-            val ICP = result.getOrNull()
-            if (ICP != null) {
-                viewModelIP.currentCity = ICP.city
-                viewModelIP.currentProvince = "(当前定位) " + ICP.province
-                val currentLngAndLat = ICP.lngandlat.split(",")
+            val iCP = result.getOrNull()
+            if (iCP != null) {
+                viewModelIP.currentCity = iCP.city
+                viewModelIP.currentProvince = "(当前定位) " + iCP.province
+                val currentLngAndLat = iCP.lngandlat.split(",")
                 viewModelIP.currentLng = currentLngAndLat[0]
                 viewModelIP.currentLat = currentLngAndLat[1]
             } else {
