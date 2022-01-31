@@ -13,6 +13,13 @@ import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 import com.yenaly.weatherchan.ui.weather.adapter.DailyWeatherAdapter
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 未来天气的Fragment。
+ */
+
 object DailyWeatherFragment : Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }

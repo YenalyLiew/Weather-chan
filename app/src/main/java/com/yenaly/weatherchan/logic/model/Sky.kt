@@ -2,6 +2,13 @@ package com.yenaly.weatherchan.logic.model
 
 import com.yenaly.weatherchan.R
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 将天气JSON里的skycon与天气图片和中文对应。
+ */
+
 class Sky(val info: String, val icon: Int, val bg: Int) {
     companion object {
         private val sky = mapOf(

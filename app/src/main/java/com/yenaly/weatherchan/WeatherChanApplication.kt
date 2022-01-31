@@ -4,6 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 全局文件，负责提供全局变量。
+ */
+
 class WeatherChanApplication : Application() {
 
     companion object {

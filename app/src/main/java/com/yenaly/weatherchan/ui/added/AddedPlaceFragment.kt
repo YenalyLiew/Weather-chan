@@ -11,6 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yenaly.weatherchan.databinding.FragmentAddedPlaceBinding
 import com.yenaly.weatherchan.ui.place.PlaceViewModel
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 添加城市的Fragment。
+ */
+
 class AddedPlaceFragment : Fragment() {
 
     val viewModelAdded by lazy { ViewModelProvider(requireActivity()).get(AddedPlaceViewModel::class.java) }
@@ -18,7 +25,6 @@ class AddedPlaceFragment : Fragment() {
 
     private var _binding: FragmentAddedPlaceBinding? = null
     private val binding get() = _binding!!
-    //private lateinit var adapter: AddedPlaceAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +39,7 @@ class AddedPlaceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //错误信息以及问题信息。
         val tipOne = "未添加任何地区"
 
         val layoutManager = LinearLayoutManager(activity)
@@ -41,6 +48,8 @@ class AddedPlaceFragment : Fragment() {
             viewModelAdded.addPlacesInitialize()
         viewModelAdded.refreshPlaces()
 
+        //动态刷新adapter。通过调用refreshPlaces()使adapter实时刷新。
+        //一般在其他Fragment对该Fragment内容产生影响时和初始化时使用。
         viewModelAdded.modifyLiveData.observe(viewLifecycleOwner) { placeList ->
             val adapter = AddedPlaceAdapter(this, placeList)
             binding.recyclerView.adapter = adapter

@@ -2,6 +2,13 @@ package com.yenaly.weatherchan.logic.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 彩云天气实时天气API的JSON格式。
+ */
+
 data class RealtimeWeatherResponse(val status: String, val result: Result) {
 
     data class Result(val realtime: Realtime) {

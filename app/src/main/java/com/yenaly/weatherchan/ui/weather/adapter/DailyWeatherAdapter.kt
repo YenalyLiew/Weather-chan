@@ -14,6 +14,13 @@ import com.yenaly.weatherchan.ui.weather.fragment.DailyWeatherFragment
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 未来天气Fragment里的RecyclerView的适配器。
+ */
+
 class DailyWeatherAdapter(
     private val fragment: DailyWeatherFragment,
     private val weather: Weather
@@ -41,7 +48,6 @@ class DailyWeatherAdapter(
         holder.skyIcon.setImageResource(sky.icon)
         holder.skyInfo.text = sky.info
         holder.tempInfo.text = tempInfo
-        Log.d("DailyWeatherAdapter", position.toString())
     }
 
     override fun getItemCount(): Int {

@@ -6,6 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.yenaly.weatherchan.logic.Repository
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 天气界面的[ViewModel]。暂存天气信息，动态刷新天气。
+ */
+
 class WeatherViewModel : ViewModel() {
 
     var locationLng = ""

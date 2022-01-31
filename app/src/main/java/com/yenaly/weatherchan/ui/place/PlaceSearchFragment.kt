@@ -15,6 +15,13 @@ import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.ui.added.AddedPlaceViewModel
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 城市搜索的Fragment。
+ */
+
 class PlaceSearchFragment : Fragment() {
 
     val viewModelSearch by lazy { ViewModelProvider(requireActivity()).get(PlaceViewModel::class.java) }
@@ -52,7 +59,7 @@ class PlaceSearchFragment : Fragment() {
 
         val tipOne = "未能查询到该地点"
 
-        //激活CurrentIpViewModel
+        //激活CurrentIpViewModel的LiveData，获取IP定位。
         viewModelIP.getCurrentIP()
 
         binding.searchPlaceEdit.addTextChangedListener { editable ->
@@ -84,6 +91,8 @@ class PlaceSearchFragment : Fragment() {
             }
         }
 
+        //动态刷新adapter。通过调用refreshSearch()使adapter实时刷新。
+        //一般在其他Fragment对该Fragment内容产生影响时和初始化时使用。
         viewModelSearch.modifyLiveData.observe(viewLifecycleOwner) { placeList ->
             adapter = PlaceSearchAdapter(this, placeList)
             binding.recyclerView.adapter = adapter
@@ -113,6 +122,9 @@ class PlaceSearchFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * 将搜索栏的第一位显示为通过[CurrentIpViewModel]获取到的地区信息。
+     */
     private fun addCurrentCityItem() {
         if (viewModelIP.currentCity.isNotEmpty() &&
             viewModelIP.currentLng.isNotEmpty() &&

@@ -21,6 +21,13 @@ import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.ui.weather.adapter.ViewPagerAdapter
 import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 天气的Activity。
+ */
+
 class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
     lateinit var binding: ActivityWeatherNewBinding
@@ -33,6 +40,7 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         setSupportActionBar(binding.toolBar)
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeActionContentDescription("Search")
             it.setHomeAsUpIndicator(R.drawable.ic_search)
         }
 
@@ -43,7 +51,7 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         if (viewModel.placeName.isEmpty())
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
 
-        //滑动冲突处理，只有在顶端时才能刷新
+        //滑动冲突处理，只有在顶端时才能刷新。
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             binding.swipeRefreshLayout.isEnabled = (verticalOffset >= 0)
         })
@@ -67,16 +75,24 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
     }
 
+    /**
+     * 刷新当前天气。
+     */
     fun refreshWeather() {
         viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
         binding.swipeRefreshLayout.isRefreshing = true
     }
 
+    /**
+     * 显示当前天气。
+     */
     private fun showWeather(weather: Weather) {
+
+        //隐藏ToolBar的title。ToolBar居中显示城市名称。
         binding.toolBar.title = ""
         binding.placeName.text = viewModel.placeName
+
         val realtime = weather.realtime
-        //
         val realtimeTemp = "${realtime.temperature} ℃"
         val realtimeSky = Sky.getSky(realtime.skycon).info
         val realtimeAirQuality = "空气质量：${realtime.airQuality.description.chn}"
@@ -87,18 +103,20 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
         binding.realtimeAirQuality.text = realtimeAirQuality
         binding.realtimeFeelLikeTemp.text = realtimeFeelLikeTemp
         Glide.with(this).load(realtimeLayoutBackground).into(binding.skyconImageView)
-        //
         binding.viewPager.apply {
             adapter = ViewPagerAdapter(this@WeatherActivity)
             offscreenPageLimit = 2
             isUserInputEnabled = true
         }
+
+        //TabLayout和ViewPager2进行绑定。
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
                 ViewPagerAdapter.PAGE_REALTIME -> tab.text = "今日"
                 ViewPagerAdapter.PAGE_DAILY -> tab.text = "未来"
             }
         }.attach()
+
         binding.coordinatorLayout.visibility = View.VISIBLE
     }
 

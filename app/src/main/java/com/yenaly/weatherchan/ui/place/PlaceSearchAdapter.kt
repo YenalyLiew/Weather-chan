@@ -13,6 +13,13 @@ import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 城市搜索Fragment的RecyclerView的适配器。
+ */
+
 class PlaceSearchAdapter(
     private val fragment: PlaceSearchFragment,
     private val placeList: List<PlaceResponse.Place>
@@ -34,6 +41,8 @@ class PlaceSearchAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val place = placeList[position]
         val activity = fragment.activity
+
+        //搜索栏第一个IP定位地区的Card颜色加深并且取消添加按钮。
         if (position == 0 &&
             fragment.viewModelIP.currentCity.isNotEmpty() &&
             fragment.viewModelIP.currentLng.isNotEmpty() &&
@@ -43,6 +52,7 @@ class PlaceSearchAdapter(
             holder.itemPlaceCardView.setCardBackgroundColor(0xFFF5F5F5.toInt())
             holder.addButton.visibility = View.GONE
         }
+
         holder.addButton.setOnClickListener {
             fragment.viewModelAdded.addPlace(place)
             if (fragment.viewModelAdded.isPlaceAdded(place)) {
@@ -72,9 +82,11 @@ class PlaceSearchAdapter(
             }
         }
 
+        //若首次打开程序选择城市时，隐藏添加按钮，暂时不提供添加功能。
         if (activity !is WeatherActivity)
             holder.addButton.visibility = View.GONE
 
+        //若地区已被添加，将按钮隐藏。
         if (fragment.viewModelAdded.isPlaceAdded(place))
             holder.addButton.visibility = View.GONE
     }

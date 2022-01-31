@@ -7,6 +7,13 @@ import com.yenaly.weatherchan.ui.weather.fragment.DailyWeatherFragment
 import com.yenaly.weatherchan.ui.weather.fragment.EmptyFragment
 import com.yenaly.weatherchan.ui.weather.fragment.RealtimeDetailedFragment
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : WeatherActivity里的ViewPager2的适配器。
+ */
+
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 

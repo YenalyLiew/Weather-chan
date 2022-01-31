@@ -7,6 +7,13 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 通过Retrofit2获取实时天气和未来天气结果。
+ */
+
 interface WeatherService {
 
     @GET("v2.5/${WeatherChanApplication.TOKEN}/{lng},{lat}/realtime.json")

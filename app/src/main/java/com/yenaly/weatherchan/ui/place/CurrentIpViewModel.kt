@@ -6,6 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.yenaly.weatherchan.logic.Repository
 import com.yenaly.weatherchan.logic.model.IPWithCityAndProvince
 
+/**
+ * @ProjectName : Weather-chan
+ * @Author : Yenaly Liew
+ * @Time : 2022/1/28 15:53
+ * @Description : 获取当前城市的ViewModel。
+ */
+
 class CurrentIpViewModel : ViewModel() {
 
     var currentCity = ""
