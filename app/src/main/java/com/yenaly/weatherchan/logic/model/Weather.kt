@@ -1,5 +1,7 @@
 package com.yenaly.weatherchan.logic.model
 
+import java.io.Serializable
+
 /**
  * @ProjectName : Weather-chan
  * @Author : Yenaly Liew
@@ -7,7 +9,7 @@ package com.yenaly.weatherchan.logic.model
  * @Description : 将实时天气和未来天气串联起来的Weather类。
  */
 
-data class Weather(
+class Weather(
     val realtime: RealtimeWeatherResponse.Result.Realtime,
     val daily: DailyWeatherResponse.Result.Daily
-)
+) : Serializable

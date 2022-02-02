@@ -1,6 +1,7 @@
 package com.yenaly.weatherchan.ui.place
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.google.android.material.card.MaterialCardView
 import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
+import java.io.Serializable
 
 /**
  * @ProjectName : Weather-chan
@@ -49,7 +51,15 @@ class PlaceSearchAdapter(
             fragment.viewModelIP.currentLat.isNotEmpty() &&
             fragment.viewModelIP.currentProvince.isNotEmpty()
         ) {
-            holder.itemPlaceCardView.setCardBackgroundColor(0xFFF5F5F5.toInt())
+
+            //判断当前是否为夜间模式
+            val currentMode =
+                fragment.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            if (currentMode != Configuration.UI_MODE_NIGHT_YES)
+                holder.itemPlaceCardView.setCardBackgroundColor(0xFFF5F5F5.toInt())
+            else
+                holder.itemPlaceCardView.setCardBackgroundColor(0xFF281F1D.toInt())
+
             holder.addButton.visibility = View.GONE
         }
 

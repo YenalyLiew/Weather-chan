@@ -33,17 +33,17 @@ class PlaceViewModel : ViewModel() {
     }
 
     /**
-     * 将地区点击记录信息保存于SharedPreferences的该列中。
+     * 将地区点击记录信息保存于`SharedPreferences`的该列中。
      */
     fun savePlace(place: PlaceResponse.Place) = Repository.savePlace(place)
 
     /**
-     * 从SharedPreferences获取地区点击记录信息。
+     * 从`SharedPreferences`获取地区点击记录信息。
      */
     fun getSavedPlace() = Repository.getSavedPlace()
 
     /**
-     * 判断SharedPreferences里是否含有该列。
+     * 判断`SharedPreferences`里是否含有该列。
      */
     fun isPlaceSaved() = Repository.isPlaceSaved()
 

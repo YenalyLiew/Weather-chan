@@ -44,6 +44,9 @@ class Sky(val info: String, val icon: Int, val bg: Int) {
             "DUST" to Sky("浮尘", R.drawable.ic_fog, R.drawable.bg_fog)
         )
 
+        /**
+         * 获取天气对应的天气图片，缺省值为晴天白天图片。
+         */
         fun getSky(skycon: String): Sky {
             return sky[skycon] ?: sky["CLEAR_DAY"]!!
         }

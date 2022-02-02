@@ -1,6 +1,5 @@
 package com.yenaly.weatherchan.ui.weather.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import java.util.Locale
  * @Author : Yenaly Liew
  * @Time : 2022/1/28 15:53
  * @Description : 未来天气Fragment里的RecyclerView的适配器。
+ *                本来是想做点击未来天气item跳转到未来详细天气的，所以fragment参数暂时没用。
  */
 
 class DailyWeatherAdapter(

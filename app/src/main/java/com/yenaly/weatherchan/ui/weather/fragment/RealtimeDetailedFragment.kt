@@ -18,19 +18,19 @@ import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
  * @Description : 实时天气的Fragment。
  */
 
-object RealtimeDetailedFragment : Fragment() {
+class RealtimeDetailedFragment : Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }
     private lateinit var weather: Weather
-    private var binding_: RealtimeWeatherDetailedBinding? = null
-    private val binding get() = binding_!!
+    private var _binding: RealtimeWeatherDetailedBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding_ = RealtimeWeatherDetailedBinding.inflate(inflater, container, false)
+        _binding = RealtimeWeatherDetailedBinding.inflate(inflater, container, false)
         viewModel.weatherLiveData.observe(requireActivity()) { result ->
             if (result.getOrNull() != null) {
                 weather = result.getOrNull()!!
@@ -43,12 +43,18 @@ object RealtimeDetailedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //在Activity刷新后读取之前保存过的内容。
+        if (savedInstanceState != null) {
+            weather = savedInstanceState.getSerializable("realtime_weather") as Weather
+        }
+
         val humidityText = weather.realtime.humidity
         val precipitationText = weather.realtime.precipitation.local.intensity
         val cloudrateText = weather.realtime.cloudrate
         val pressureText = weather.realtime.pressure
         val visibilityText = weather.realtime.visibility
-        val windText = "${weather.realtime.wind.direction} / ${weather.realtime.wind.speed}"
+        val windText = "${weather.realtime.wind.direction}° / ${weather.realtime.wind.speed}"
         val carWashingText = weather.daily.lifeIndex.carWashing[0].desc
         val coldRiskText = weather.daily.lifeIndex.coldRisk[0].desc
         val dressingText = weather.daily.lifeIndex.dressing[0].desc
@@ -65,9 +71,19 @@ object RealtimeDetailedFragment : Fragment() {
         binding.realtimeWeatherLifeIndexLayout.uvText.text = uvText
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("realtime_weather", weather)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        binding_ = null
+        _binding = null
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = RealtimeDetailedFragment()
     }
 
 }

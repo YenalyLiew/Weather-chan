@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceCreator {
     private const val BASE_URL_CAIYUN = "https://api.caiyunapp.com/"
     private const val BASE_URL_GAODE = "https://restapi.amap.com/"
+    private const val BASE_URL_IP_API = "http://ip-api.com/"
 
     private val retrofitCaiyun =
         Retrofit.Builder()
@@ -24,7 +25,13 @@ object ServiceCreator {
             .baseUrl(BASE_URL_GAODE)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    private val retrofitIpApi =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL_IP_API)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     fun <T> createInCaiYun(serviceClass: Class<T>): T = retrofitCaiyun.create(serviceClass)
     fun <T> createInGaoDe(serviceClass: Class<T>): T = retrofitGaode.create(serviceClass)
+    fun <T> createIpApi(serviceClass: Class<T>): T = retrofitIpApi.create(serviceClass)
 }

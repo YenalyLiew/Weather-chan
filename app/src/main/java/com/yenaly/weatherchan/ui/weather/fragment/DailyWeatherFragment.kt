@@ -20,19 +20,19 @@ import com.yenaly.weatherchan.ui.weather.adapter.DailyWeatherAdapter
  * @Description : 未来天气的Fragment。
  */
 
-object DailyWeatherFragment : Fragment() {
+class DailyWeatherFragment : Fragment() {
 
     private val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }
     private lateinit var weather: Weather
-    private var binding_: ForecastWeatherBinding? = null
-    private val binding get() = binding_!!
+    private var _binding: ForecastWeatherBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding_ = ForecastWeatherBinding.inflate(inflater, container, false)
+        _binding = ForecastWeatherBinding.inflate(inflater, container, false)
         viewModel.weatherLiveData.observe(requireActivity()) { result ->
             if (result.getOrNull() != null) {
                 weather = result.getOrNull()!!
@@ -45,14 +45,31 @@ object DailyWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //在Activity刷新后读取之前保存过的内容。
+        if (savedInstanceState != null) {
+            weather = savedInstanceState.getSerializable("daily_weather") as Weather
+        }
+
         val layoutManager = LinearLayoutManager(activity)
         binding.forecastItemRv.layoutManager = layoutManager
         val adapter = DailyWeatherAdapter(this, weather)
         binding.forecastItemRv.adapter = adapter
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("daily_weather", weather)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        binding_ = null
+        _binding = null
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = DailyWeatherFragment()
+    }
+
 }

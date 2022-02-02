@@ -28,9 +28,9 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            PAGE_REALTIME -> RealtimeDetailedFragment
-            PAGE_DAILY -> DailyWeatherFragment
-            else -> EmptyFragment
+            PAGE_REALTIME -> RealtimeDetailedFragment.newInstance()
+            PAGE_DAILY -> DailyWeatherFragment.newInstance()
+            else -> EmptyFragment.newInstance()
         }
     }
 }

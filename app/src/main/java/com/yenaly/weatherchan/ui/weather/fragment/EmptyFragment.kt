@@ -10,4 +10,11 @@ import androidx.fragment.app.Fragment
  *                主要为了[ViewPagerAdapter]的createFragment(int)方法的else而创建。
  */
 
-object EmptyFragment : Fragment()
+class EmptyFragment : Fragment() {
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = EmptyFragment()
+    }
+
+}

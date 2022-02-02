@@ -22,7 +22,7 @@ class AddedPlaceFragment : Fragment() {
 
     val viewModelAdded by lazy { ViewModelProvider(requireActivity()).get(AddedPlaceViewModel::class.java) }
     val viewModelSearch by lazy { ViewModelProvider(requireActivity()).get(PlaceViewModel::class.java) }
-
+    private lateinit var adapter: AddedPlaceAdapter
     private var _binding: FragmentAddedPlaceBinding? = null
     private val binding get() = _binding!!
 
@@ -44,14 +44,16 @@ class AddedPlaceFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
-        if (viewModelAdded.isPlacesAdded())
+        adapter = AddedPlaceAdapter(this, emptyList())
+
+        if (viewModelAdded.isPlacesAdded() && !viewModelAdded.containsAddedPlaces())
             viewModelAdded.addPlacesInitialize()
         viewModelAdded.refreshPlaces()
 
         //动态刷新adapter。通过调用refreshPlaces()使adapter实时刷新。
         //一般在其他Fragment对该Fragment内容产生影响时和初始化时使用。
         viewModelAdded.modifyLiveData.observe(viewLifecycleOwner) { placeList ->
-            val adapter = AddedPlaceAdapter(this, placeList)
+            adapter = AddedPlaceAdapter(this, placeList)
             binding.recyclerView.adapter = adapter
             if (viewModelAdded.isListNotEmpty()) {
                 binding.recyclerView.visibility = View.VISIBLE

@@ -55,12 +55,16 @@ class PlaceSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
+        adapter = PlaceSearchAdapter(this, emptyList())
+
+        //初始化adapter。
         viewModelSearch.refreshSearch()
 
-        val tipOne = "未能查询到该地点"
-
         //激活CurrentIpViewModel的LiveData，获取IP定位。
-        viewModelIP.getCurrentIP()
+        viewModelIP.getCurrentIPWithPlace()
+
+        //错误信息以及问题信息。
+        val tipOne = "未能查询到该地点"
 
         binding.searchPlaceEdit.addTextChangedListener { editable ->
             val content = editable.toString()
@@ -82,7 +86,11 @@ class PlaceSearchFragment : Fragment() {
             if (!places.isNullOrEmpty() && places.isNotEmpty()) {
                 binding.bgImageview.visibility = View.GONE
                 binding.searchTipText.visibility = View.GONE
-                viewModelSearch.placeList.addAll(places)
+
+                //防止placeList在Activity重建时又重新add一遍。
+                if (viewModelSearch.placeList.size == 1 || viewModelSearch.placeList.size == 0)
+                    viewModelSearch.placeList.addAll(places)
+
                 adapter.notifyDataSetChanged()
             } else {
                 binding.searchTipText.visibility = View.VISIBLE
@@ -101,8 +109,8 @@ class PlaceSearchFragment : Fragment() {
         viewModelIP.currentIPLiveData.observe(viewLifecycleOwner) { result ->
             val iCP = result.getOrNull()
             if (iCP != null) {
-                viewModelIP.currentCity = iCP.city
-                viewModelIP.currentProvince = "(当前定位) " + iCP.province
+                viewModelIP.currentCity = iCP.district
+                viewModelIP.currentProvince = "(当前定位) ${iCP.country} ${iCP.province} ${iCP.city}"
                 val currentLngAndLat = iCP.lngandlat.split(",")
                 viewModelIP.currentLng = currentLngAndLat[0]
                 viewModelIP.currentLat = currentLngAndLat[1]
@@ -126,11 +134,7 @@ class PlaceSearchFragment : Fragment() {
      * 将搜索栏的第一位显示为通过[CurrentIpViewModel]获取到的地区信息。
      */
     private fun addCurrentCityItem() {
-        if (viewModelIP.currentCity.isNotEmpty() &&
-            viewModelIP.currentLng.isNotEmpty() &&
-            viewModelIP.currentLat.isNotEmpty()
-            && viewModelIP.currentProvince.isNotEmpty()
-        ) {
+        if (isCurrentCityItemAdded()) {
             viewModelSearch.placeList.add(
                 0, PlaceResponse.Place(
                     viewModelIP.currentCity,
@@ -144,4 +148,14 @@ class PlaceSearchFragment : Fragment() {
         }
     }
 
+    /**
+     * 判断第一栏是否为通过[CurrentIpViewModel]获取到的地区信息。
+     */
+    private fun isCurrentCityItemAdded(): Boolean {
+        return viewModelIP.currentCity.isNotEmpty() &&
+                viewModelIP.currentLng.isNotEmpty() &&
+                viewModelIP.currentLat.isNotEmpty() &&
+                viewModelIP.currentProvince.isNotEmpty() &&
+                viewModelSearch.placeList.isEmpty()
+    }
 }

@@ -13,7 +13,9 @@ object WeatherChanNetwork {
 
     private val placeService = ServiceCreator.createInCaiYun(PlaceService::class.java)
     private val weatherService = ServiceCreator.createInCaiYun(WeatherService::class.java)
-    private val currentIpService = ServiceCreator.createInGaoDe(CurrentIpService::class.java)
+    private val currentIpService = ServiceCreator.createIpApi(CurrentIpService::class.java)
+    private val currentIpWithPlaceService =
+        ServiceCreator.createInGaoDe(CurrentIpWithPlaceService::class.java)
 
     suspend fun searchPlaces(query: String) =
         placeService.searchPlaces(query).await()
@@ -24,7 +26,9 @@ object WeatherChanNetwork {
     suspend fun getDailyWeather(lng: String, lat: String) =
         weatherService.getDailyWeather(lng, lat).await()
 
-    suspend fun getCurrentIP() =
-        currentIpService.getCurrentIP().await()
+    suspend fun getCurrentIP() = currentIpService.getCurrentIP().await()
+
+    suspend fun getCurrentIPWithPlace(ip: String) =
+        currentIpWithPlaceService.getCurrentIPWithPlace(ip).await()
 
 }

@@ -18,8 +18,7 @@
     <FrameLayout
         android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/design_default_color_on_primary">
+        android:layout_height="60dp">
 
         <EditText
             android:id="@+id/search_place_edit"
@@ -34,6 +33,8 @@
             android:maxLines="1"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#42000000"
             tools:ignore="HardcodedText,TextFields" />
 
     </FrameLayout>
@@ -42,8 +43,8 @@
         android:id="@+id/split_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#708090"
-        android:layout_below="@id/search_bar_layout"/>
+        android:layout_below="@id/search_bar_layout"
+        android:background="#708090" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

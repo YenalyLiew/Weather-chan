@@ -60,19 +60,32 @@ object Repository {
         }
     }
 
-    fun getCurrentIP(): LiveData<Result<IPWithCityAndProvince>> {
+    fun getCurrentIPWithPlace(): LiveData<Result<IPWithCityAndProvince>> {
         return fire {
             val currentIpResponse = WeatherChanNetwork.getCurrentIP()
-            if (currentIpResponse.status == "1") {
-
-                //当前IP定位获取到的经纬度矩形信息的边角值。
-                val currentIpRange = currentIpResponse.rectangle.split(";")
-
-                val province = currentIpResponse.province
-                val city = currentIpResponse.city
-                Result.success(IPWithCityAndProvince(city, province, currentIpRange[0]))
+            if (currentIpResponse.status == "success") {
+                val ip = currentIpResponse.query
+                val currentIpWithPlaceResponse = WeatherChanNetwork.getCurrentIPWithPlace(ip)
+                if (currentIpWithPlaceResponse.status == "1") {
+                    val country = currentIpWithPlaceResponse.country
+                    val province = currentIpWithPlaceResponse.province
+                    val city = currentIpWithPlaceResponse.city
+                    val district = currentIpWithPlaceResponse.district
+                    val location = currentIpWithPlaceResponse.location
+                    Result.success(
+                        IPWithCityAndProvince(
+                            country,
+                            province,
+                            city,
+                            district,
+                            location
+                        )
+                    )
+                } else {
+                    Result.failure(RuntimeException("Place Response Status is ${currentIpWithPlaceResponse.status}"))
+                }
             } else {
-                Result.failure(RuntimeException("Response Status is ${currentIpResponse.status}"))
+                Result.failure(RuntimeException("IP Response Status is ${currentIpResponse.status}"))
             }
         }
     }
@@ -93,9 +106,9 @@ object Repository {
     fun isPlacesAdded() = AddedPlaceDao.isPlacesAdded()
 
     /**
-     * [fire]函数先调用[liveData]函数，再在[liveData]代码块中统一进行try catch处理，
-     * 在try语句调用传入的Lambda表达式中代码，最后获取Lambda表达式的执行结果，
-     * 并调用emit()方法发射出去。
+     * [fire]函数先调用[liveData]函数，再在[liveData]代码块中统一进行`try` `catch`处理，
+     * 在`try`语句调用传入的Lambda表达式中代码，最后获取Lambda表达式的执行结果，
+     * 并调用`emit()`方法发射出去。
      *
      * [CoroutineContext]默认值为[Dispatchers.IO]（子线程）。
      */

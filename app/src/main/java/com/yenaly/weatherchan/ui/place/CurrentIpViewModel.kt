@@ -22,10 +22,10 @@ class CurrentIpViewModel : ViewModel() {
 
     private val ipLiveData = MutableLiveData<IPWithCityAndProvince>()
     val currentIPLiveData = Transformations.switchMap(ipLiveData) {
-        Repository.getCurrentIP()
+        Repository.getCurrentIPWithPlace()
     }
 
-    fun getCurrentIP() {
+    fun getCurrentIPWithPlace() {
         ipLiveData.value = ipLiveData.value
     }
 }
