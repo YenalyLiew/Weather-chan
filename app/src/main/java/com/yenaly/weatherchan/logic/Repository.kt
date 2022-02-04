@@ -7,7 +7,7 @@ import com.yenaly.weatherchan.logic.dao.PlaceDao
 import com.yenaly.weatherchan.logic.model.IPWithCityAndProvince
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.logic.model.Weather
-import com.yenaly.weatherchan.logic.network.WeatherChanNetwork
+import com.yenaly.weatherchan.logic.network.WeatherNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -25,7 +25,7 @@ object Repository {
 
     fun searchPlaces(query: String): LiveData<Result<List<PlaceResponse.Place>>> {
         return fire {
-            val placeResponse = WeatherChanNetwork.searchPlaces(query)
+            val placeResponse = WeatherNetwork.searchPlaces(query)!!
             if (placeResponse.status == "ok") {
                 val places = placeResponse.places
                 Result.success(places)
@@ -38,8 +38,8 @@ object Repository {
     fun refreshWeather(lng: String, lat: String): LiveData<Result<Weather>> {
         return fire {
             coroutineScope {
-                val deferredRealtime = async { WeatherChanNetwork.getRealtimeWeather(lng, lat) }
-                val deferredDaily = async { WeatherChanNetwork.getDailyWeather(lng, lat) }
+                val deferredRealtime = async { WeatherNetwork.getRealtimeWeather(lng, lat)!! }
+                val deferredDaily = async { WeatherNetwork.getDailyWeather(lng, lat)!! }
                 val realtimeWeatherResponse = deferredRealtime.await()
                 val dailyWeatherResponse = deferredDaily.await()
                 if (realtimeWeatherResponse.status == "ok" && dailyWeatherResponse.status == "ok") {
@@ -62,10 +62,10 @@ object Repository {
 
     fun getCurrentIPWithPlace(): LiveData<Result<IPWithCityAndProvince>> {
         return fire {
-            val currentIpResponse = WeatherChanNetwork.getCurrentIP()
+            val currentIpResponse = WeatherNetwork.getCurrentIP()!!
             if (currentIpResponse.status == "success") {
                 val ip = currentIpResponse.query
-                val currentIpWithPlaceResponse = WeatherChanNetwork.getCurrentIPWithPlace(ip)
+                val currentIpWithPlaceResponse = WeatherNetwork.getCurrentIPWithPlace(ip)!!
                 if (currentIpWithPlaceResponse.status == "1") {
                     val country = currentIpWithPlaceResponse.country
                     val province = currentIpWithPlaceResponse.province
