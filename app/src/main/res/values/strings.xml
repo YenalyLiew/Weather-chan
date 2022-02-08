@@ -1,3 +1,50 @@
 <resources>
     <string name="app_name">Weather-chan</string>
+    <string name="amap_api_key" translatable="false">4564b22ab8896c328671fba23cc81541</string>
+
+    <string name="forecast">预报</string>
+    <string name="added_places">添加的城市</string>
+    <string name="input_place">输入地区</string>
+    <string name="realtime_index">当日指标</string>
+    <string name="relative_humidity">相对湿度</string>
+    <string name="cloud_rate">云量</string>
+    <string name="visibility">能见度</string>
+    <string name="wind_direction_and_speed">风向 / 风速</string>
+    <string name="pressure">气压</string>
+    <string name="local_precipitation">本地降水强度</string>
+    <string name="realtime_life_index">当日生活指数</string>
+    <string name="cold_risk">感冒</string>
+    <string name="wear_clothes">穿衣</string>
+    <string name="ultra_violet">紫外线</string>
+    <string name="car_washing">洗车</string>
+    <string name="air_quality">空气质量</string>
+    <string name="feel_like_temperature">体感温度</string>
+    <string name="celsius">℃</string>
+    <string name="fahrenheit">℉</string>
+    <string name="today">今日</string>
+    <string name="future">未来</string>
+
+    <string name="added_places_list">添加城市列表</string>
+    <string name="settings">设置</string>
+
+    <string name="units">单位制</string>
+    <string name="imperial">英制 (℉)</string>
+    <string name="metric">公制 (℃)</string>
+
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

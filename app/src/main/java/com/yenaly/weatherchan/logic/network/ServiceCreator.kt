@@ -11,27 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 
 object ServiceCreator {
-    private const val BASE_URL_CAIYUN = "https://api.caiyunapp.com/"
-    private const val BASE_URL_GAODE = "https://restapi.amap.com/"
-    private const val BASE_URL_IP_API = "http://ip-api.com/"
 
-    private val retrofitCaiyun =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL_CAIYUN)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    private val retrofitGaode =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL_GAODE)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    private val retrofitIpApi =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL_IP_API)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    const val BASE_URL_CAIYUN = "https://api.caiyunapp.com/"
+    const val BASE_URL_GAODE = "https://restapi.amap.com/"
 
-    fun <T> createInCaiYun(serviceClass: Class<T>): T = retrofitCaiyun.create(serviceClass)
-    fun <T> createInGaoDe(serviceClass: Class<T>): T = retrofitGaode.create(serviceClass)
-    fun <T> createIpApi(serviceClass: Class<T>): T = retrofitIpApi.create(serviceClass)
+    fun <T> create(url: String, serviceClass: Class<T>): T =
+        Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(serviceClass)
+
+    inline fun <reified T> create(url: String): T = create(url, T::class.java)
 }

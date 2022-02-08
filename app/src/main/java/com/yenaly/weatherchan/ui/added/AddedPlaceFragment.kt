@@ -26,6 +26,11 @@ class AddedPlaceFragment : Fragment() {
     private var _binding: FragmentAddedPlaceBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        //错误信息以及问题信息。
+        private const val tipOne = "未添加任何地区"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,9 +43,6 @@ class AddedPlaceFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //错误信息以及问题信息。
-        val tipOne = "未添加任何地区"
 
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager

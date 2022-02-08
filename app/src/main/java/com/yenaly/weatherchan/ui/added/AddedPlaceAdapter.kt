@@ -1,6 +1,7 @@
 package com.yenaly.weatherchan.ui.added
 
 import android.annotation.SuppressLint
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,11 @@ class AddedPlaceAdapter(
         holder.addedPlaceName.text = listAddedPlace[position].name
         holder.addedPlaceAddress.text = listAddedPlace[position].address
         holder.deleteButton.setOnClickListener {
+            it.isHapticFeedbackEnabled = true
+            it.performHapticFeedback(
+                HapticFeedbackConstants.VIRTUAL_KEY,
+                HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+            )
             AlertDialog.Builder(fragment.requireContext())
                 .setTitle("提示")
                 .setMessage("确定要将 " + listAddedPlace[position].name + " 移除添加吗？")

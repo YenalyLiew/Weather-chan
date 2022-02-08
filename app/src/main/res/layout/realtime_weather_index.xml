@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
@@ -16,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
-            android:text="当日指标"
+            android:text="@string/realtime_index"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="20sp" />
 
@@ -37,7 +38,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_humidity" />
+                    android:src="@drawable/ic_humidity"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -50,7 +52,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="相对湿度"
+                        android:text="@string/relative_humidity"
                         android:textSize="12sp" />
 
                     <TextView
@@ -75,7 +77,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_cloudrate" />
+                    android:src="@drawable/ic_cloudrate"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -88,7 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="云量"
+                        android:text="@string/cloud_rate"
                         android:textSize="12sp" />
 
                     <TextView
@@ -106,7 +109,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -119,7 +123,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_visibility" />
+                    android:src="@drawable/ic_visibility"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -132,7 +137,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="能见度"
+                        android:text="@string/visibility"
                         android:textSize="12sp" />
 
                     <TextView
@@ -157,7 +162,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_wind_direction" />
+                    android:src="@drawable/ic_wind_direction"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -170,7 +176,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="风向 / 风速(km/h)"
+                        android:text="@string/wind_direction_and_speed"
                         android:textSize="12sp" />
 
                     <TextView
@@ -204,7 +210,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_pressure" />
+                    android:src="@drawable/ic_pressure"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -217,7 +224,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="气压"
+                        android:text="@string/pressure"
                         android:textSize="12sp" />
 
                     <TextView
@@ -242,7 +249,8 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_precipitation" />
+                    android:src="@drawable/ic_precipitation"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -255,7 +263,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="本地降水强度"
+                        android:text="@string/local_precipitation"
                         android:textSize="12sp" />
 
                     <TextView

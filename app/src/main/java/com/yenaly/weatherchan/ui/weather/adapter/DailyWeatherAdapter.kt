@@ -40,10 +40,15 @@ class DailyWeatherAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val unitOfTemperature = if (fragment.viewModel.getSettingsString(
+                fragment.resources.getString(R.string.units),
+                fragment.resources.getString(R.string.metric)
+            ) == fragment.resources.getString(R.string.metric)
+        ) "℃" else "℉"
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val sky = Sky.getSky(weather.daily.skycon[position].value)
         val tempInfo =
-            "${weather.daily.temperature[position].min} ~ ${weather.daily.temperature[position].max} ℃"
+            "${weather.daily.temperature[position].min} ~ ${weather.daily.temperature[position].max} " + unitOfTemperature
         holder.dateInfo.text = dateFormat.format(weather.daily.skycon[position].date)
         holder.skyIcon.setImageResource(sky.icon)
         holder.skyInfo.text = sky.info

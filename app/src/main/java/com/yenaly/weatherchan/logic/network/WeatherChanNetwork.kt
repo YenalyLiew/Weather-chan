@@ -11,24 +11,18 @@ import retrofit2.await
 
 object WeatherChanNetwork {
 
-    private val placeService = ServiceCreator.createInCaiYun(PlaceService::class.java)
-    private val weatherService = ServiceCreator.createInCaiYun(WeatherService::class.java)
-    private val currentIpService = ServiceCreator.createIpApi(CurrentIpService::class.java)
-    private val currentIpWithPlaceService =
-        ServiceCreator.createInGaoDe(CurrentIpWithPlaceService::class.java)
+    private val placeService =
+        ServiceCreator.create<PlaceService>(ServiceCreator.BASE_URL_CAIYUN)
+    private val weatherService =
+        ServiceCreator.create<WeatherService>(ServiceCreator.BASE_URL_CAIYUN)
 
     suspend fun searchPlaces(query: String) =
         placeService.searchPlaces(query).await()
 
-    suspend fun getRealtimeWeather(lng: String, lat: String) =
-        weatherService.getRealtimeWeather(lng, lat).await()
+    suspend fun getRealtimeWeather(lng: String, lat: String, unit: String?) =
+        weatherService.getRealtimeWeather(lng, lat, unit).await()
 
-    suspend fun getDailyWeather(lng: String, lat: String) =
-        weatherService.getDailyWeather(lng, lat).await()
-
-    suspend fun getCurrentIP() = currentIpService.getCurrentIP().await()
-
-    suspend fun getCurrentIPWithPlace(ip: String) =
-        currentIpWithPlaceService.getCurrentIPWithPlace(ip).await()
+    suspend fun getDailyWeather(lng: String, lat: String, unit: String?) =
+        weatherService.getDailyWeather(lng, lat, unit).await()
 
 }

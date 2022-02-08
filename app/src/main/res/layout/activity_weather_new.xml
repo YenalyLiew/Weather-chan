@@ -20,13 +20,13 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="530dp"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_tool_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="530dp"
                     android:fitsSystemWindows="true"
                     android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
                     app:contentScrim="@color/design_default_color_primary"
@@ -39,7 +39,8 @@
                         android:layout_height="match_parent"
                         android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
-                        app:layout_collapseMode="parallax" />
+                        app:layout_collapseMode="parallax"
+                        tools:ignore="ContentDescription" />
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/tool_bar"
@@ -105,12 +106,20 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:layout_marginBottom="15dp"
-                            android:text="air qulityis goof"
+                            android:text="air quality is good"
                             android:textColor="#fff"
                             android:textSize="15sp" />
                     </LinearLayout>
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/two_round"
+                    app:tabIndicatorFullWidth="false"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -118,36 +127,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <LinearLayout
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:ignore="SpeakableTextPresentCheck" />
-
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
+                    android:layout_height="match_parent" />
 
             </androidx.core.widget.NestedScrollView>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/design_default_color_on_primary"
         android:clickable="true"
         android:focusable="true">
 
@@ -162,7 +158,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="@color/design_default_color_on_primary"
         android:clickable="true"
         android:focusable="true">
 

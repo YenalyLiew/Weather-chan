@@ -6,6 +6,7 @@ import com.yenaly.weatherchan.logic.model.RealtimeWeatherResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @ProjectName : Weather-chan
@@ -19,13 +20,15 @@ interface WeatherService {
     @GET("v2.5/${WeatherChanApplication.TOKEN}/{lng},{lat}/realtime.json")
     fun getRealtimeWeather(
         @Path("lng") lng: String,
-        @Path("lat") lat: String
+        @Path("lat") lat: String,
+        @Query("unit") unit: String?
     ): Call<RealtimeWeatherResponse>
 
     @GET("v2.5/${WeatherChanApplication.TOKEN}/{lng},{lat}/daily.json")
     fun getDailyWeather(
         @Path("lng") lng: String,
-        @Path("lat") lat: String
+        @Path("lat") lat: String,
+        @Query("unit") unit: String?
     ): Call<DailyWeatherResponse>
 
 }

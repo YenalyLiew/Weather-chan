@@ -6,14 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.amap.api.location.AMapLocationClient
+import com.amap.api.location.AMapLocationClientOption
+import com.yenaly.weatherchan.WeatherChanApplication
 import com.yenaly.weatherchan.databinding.FragmentPlaceSearchBinding
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.ui.added.AddedPlaceViewModel
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
+import java.lang.Exception
 
 /**
  * @ProjectName : Weather-chan
@@ -28,8 +33,27 @@ class PlaceSearchFragment : Fragment() {
     val viewModelIP by lazy { ViewModelProvider(requireActivity()).get(CurrentIpViewModel::class.java) }
     val viewModelAdded by lazy { ViewModelProvider(requireActivity()).get(AddedPlaceViewModel::class.java) }
     private lateinit var adapter: PlaceSearchAdapter
+    private var locationClient: AMapLocationClient? = null
+    private var locationClientOption: AMapLocationClientOption? = null
     private var _binding: FragmentPlaceSearchBinding? = null
     private val binding get() = _binding!!
+
+    companion object {
+        //错误信息以及问题信息。
+        private const val tipNO = "未能查询到该地点"
+        private const val tipNINE = "定位初始化时出现异常。\n请重新启动定位。"
+        private const val tipTWELVE = "缺少定位权限。\n请在设备的设置中开启app的定位权限。"
+        private const val tipTHIRTEEN = "定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用。\n建议检查权限是否开启。"
+        private const val tipELSE = "定位出现异常，请稍后再试。"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AMapLocationClient.updatePrivacyAgree(WeatherChanApplication.context, true)
+        AMapLocationClient.updatePrivacyShow(WeatherChanApplication.context, true, true)
+        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTPS)
+        initLocation()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,22 +84,20 @@ class PlaceSearchFragment : Fragment() {
         //初始化adapter。
         viewModelSearch.refreshSearch()
 
-        //激活CurrentIpViewModel的LiveData，获取IP定位。
-        viewModelIP.getCurrentIPWithPlace()
-
-        //错误信息以及问题信息。
-        val tipOne = "未能查询到该地点"
+        startLocation()
 
         binding.searchPlaceEdit.addTextChangedListener { editable ->
             val content = editable.toString()
             if (content.isNotEmpty()) {
                 viewModelSearch.placeList.clear()
+                startLocation()
                 addCurrentCityItem()
                 viewModelSearch.searchPlaces(content)
             } else {
                 binding.bgImageview.visibility = View.VISIBLE
                 binding.searchTipText.visibility = View.GONE
                 viewModelSearch.placeList.clear()
+                startLocation()
                 addCurrentCityItem()
                 adapter.notifyDataSetChanged()
             }
@@ -94,7 +116,7 @@ class PlaceSearchFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             } else {
                 binding.searchTipText.visibility = View.VISIBLE
-                binding.searchTipText.text = tipOne
+                binding.searchTipText.text = tipNO
                 result.exceptionOrNull()?.printStackTrace()
             }
         }
@@ -106,28 +128,12 @@ class PlaceSearchFragment : Fragment() {
             binding.recyclerView.adapter = adapter
         }
 
-        viewModelIP.currentIPLiveData.observe(viewLifecycleOwner) { result ->
-            val iCP = result.getOrNull()
-            if (iCP != null) {
-                viewModelIP.currentCity = iCP.district
-                viewModelIP.currentProvince = "(当前定位) ${iCP.country} ${iCP.province} ${iCP.city}"
-                val currentLngAndLat = iCP.lngandlat.split(",")
-                viewModelIP.currentLng = currentLngAndLat[0]
-                viewModelIP.currentLat = currentLngAndLat[1]
-            } else {
-                viewModelIP.currentCity = ""
-                viewModelIP.currentProvince = ""
-                viewModelIP.currentLng = ""
-                viewModelIP.currentLat = ""
-            }
-            addCurrentCityItem()
-            adapter.notifyDataSetChanged()
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        destroyLocation()
     }
 
     /**
@@ -158,4 +164,55 @@ class PlaceSearchFragment : Fragment() {
                 viewModelIP.currentProvince.isNotEmpty() &&
                 viewModelSearch.placeList.isEmpty()
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initLocation() {
+        try {
+            locationClient = AMapLocationClient(WeatherChanApplication.context)
+            locationClientOption = AMapLocationClientOption()
+            locationClientOption?.isOnceLocation = true
+            locationClient?.setLocationOption(locationClientOption)
+            locationClient?.setLocationListener { location ->
+                if (location != null) {
+                    when (location.errorCode) {
+                        0 -> {
+                            viewModelIP.currentLng = location.longitude.toString()
+                            viewModelIP.currentLat = location.latitude.toString()
+                            viewModelIP.currentCity = location.district
+                            viewModelIP.currentProvince =
+                                "(当前定位) ${location.country} ${location.province} ${location.city}"
+                            addCurrentCityItem()
+                            adapter.notifyDataSetChanged()
+                        }
+                        9 -> tipNINE.toast()
+                        12 -> tipTWELVE.toast()
+                        13 -> tipTHIRTEEN.toast()
+                        else -> tipELSE.toast()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun startLocation() {
+        try {
+            locationClient?.startLocation()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun destroyLocation() {
+        try {
+            locationClient?.onDestroy()
+            locationClient = null
+            locationClientOption = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun String.toast() = Toast.makeText(requireContext(), this, Toast.LENGTH_SHORT).show()
 }

@@ -22,7 +22,7 @@ import com.yenaly.weatherchan.ui.weather.adapter.DailyWeatherAdapter
 
 class DailyWeatherFragment : Fragment() {
 
-    private val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }
+    val viewModel by lazy { ViewModelProvider(requireActivity()).get(WeatherViewModel::class.java) }
     private lateinit var weather: Weather
     private var _binding: ForecastWeatherBinding? = null
     private val binding get() = _binding!!

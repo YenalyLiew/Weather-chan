@@ -1,6 +1,7 @@
 package com.yenaly.weatherchan.logic.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * @ProjectName : Weather-chan
@@ -9,7 +10,10 @@ import com.google.gson.annotations.SerializedName
  * @Description : 彩云天气实时天气API的JSON格式。
  */
 
-data class RealtimeWeatherResponse(val status: String, val result: Result) {
+data class RealtimeWeatherResponse(
+    val status: String,
+    val result: Result
+) {
 
     data class Result(val realtime: Realtime) {
 
@@ -31,38 +35,38 @@ data class RealtimeWeatherResponse(val status: String, val result: Result) {
 
             @SerializedName("life_index")
             val lifeIndex: LifeIndex
-        ) {
+        ) : Serializable {
 
             data class Wind(
                 val speed: Float,
                 val direction: Float
-            )
+            ) : Serializable
 
-            data class Precipitation(val local: Local) {
+            data class Precipitation(val local: Local) : Serializable {
 
-                data class Local(val intensity: Double)
+                data class Local(val intensity: Double) : Serializable
 
             }
 
             data class AirQuality(
                 val aqi: AQI,
                 val description: Description
-            ) {
+            ) : Serializable {
 
-                data class AQI(val chn: Float)
+                data class AQI(val chn: Float) : Serializable
 
-                data class Description(val chn: String)
+                data class Description(val chn: String) : Serializable
 
             }
 
             data class LifeIndex(
                 val ultraviolet: UltraViolet,
                 val comfort: Comfort
-            ) {
+            ) : Serializable {
 
-                data class UltraViolet(val desc: String)
+                data class UltraViolet(val desc: String) : Serializable
 
-                data class Comfort(val desc: String)
+                data class Comfort(val desc: String) : Serializable
 
             }
         }

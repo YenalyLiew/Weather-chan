@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.yenaly.weatherchan.logic.dao.AddedPlaceDao
 import com.yenaly.weatherchan.logic.dao.PlaceDao
-import com.yenaly.weatherchan.logic.model.IPWithCityAndProvince
+import com.yenaly.weatherchan.logic.dao.SettingsDao
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.logic.network.WeatherChanNetwork
@@ -35,11 +35,12 @@ object Repository {
         }
     }
 
-    fun refreshWeather(lng: String, lat: String): LiveData<Result<Weather>> {
+    fun refreshWeather(lng: String, lat: String, unit: String?): LiveData<Result<Weather>> {
         return fire {
             coroutineScope {
-                val deferredRealtime = async { WeatherChanNetwork.getRealtimeWeather(lng, lat) }
-                val deferredDaily = async { WeatherChanNetwork.getDailyWeather(lng, lat) }
+                val deferredRealtime =
+                    async { WeatherChanNetwork.getRealtimeWeather(lng, lat, unit) }
+                val deferredDaily = async { WeatherChanNetwork.getDailyWeather(lng, lat, unit) }
                 val realtimeWeatherResponse = deferredRealtime.await()
                 val dailyWeatherResponse = deferredDaily.await()
                 if (realtimeWeatherResponse.status == "ok" && dailyWeatherResponse.status == "ok") {
@@ -60,36 +61,6 @@ object Repository {
         }
     }
 
-    fun getCurrentIPWithPlace(): LiveData<Result<IPWithCityAndProvince>> {
-        return fire {
-            val currentIpResponse = WeatherChanNetwork.getCurrentIP()
-            if (currentIpResponse.status == "success") {
-                val ip = currentIpResponse.query
-                val currentIpWithPlaceResponse = WeatherChanNetwork.getCurrentIPWithPlace(ip)
-                if (currentIpWithPlaceResponse.status == "1") {
-                    val country = currentIpWithPlaceResponse.country
-                    val province = currentIpWithPlaceResponse.province
-                    val city = currentIpWithPlaceResponse.city
-                    val district = currentIpWithPlaceResponse.district
-                    val location = currentIpWithPlaceResponse.location
-                    Result.success(
-                        IPWithCityAndProvince(
-                            country,
-                            province,
-                            city,
-                            district,
-                            location
-                        )
-                    )
-                } else {
-                    Result.failure(RuntimeException("Place Response Status is ${currentIpWithPlaceResponse.status}"))
-                }
-            } else {
-                Result.failure(RuntimeException("IP Response Status is ${currentIpResponse.status}"))
-            }
-        }
-    }
-
     fun savePlace(place: PlaceResponse.Place) = PlaceDao.savePlace(place)
 
     fun getSavedPlace() = PlaceDao.getSavedPlace()
@@ -104,6 +75,9 @@ object Repository {
         AddedPlaceDao.isPlaceAdded(place, places)
 
     fun isPlacesAdded() = AddedPlaceDao.isPlacesAdded()
+
+    fun getSettingsString(string: String, defValue: String) =
+        SettingsDao.getSettingsString(string, defValue)
 
     /**
      * [fire]函数先调用[liveData]函数，再在[liveData]代码块中统一进行`try` `catch`处理，

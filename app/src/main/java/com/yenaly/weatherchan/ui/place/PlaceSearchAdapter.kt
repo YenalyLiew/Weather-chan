@@ -2,6 +2,7 @@ package com.yenaly.weatherchan.ui.place
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import com.google.android.material.card.MaterialCardView
 import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
-import java.io.Serializable
 
 /**
  * @ProjectName : Weather-chan
@@ -64,6 +64,11 @@ class PlaceSearchAdapter(
         }
 
         holder.addButton.setOnClickListener {
+            it.isHapticFeedbackEnabled = true
+            it.performHapticFeedback(
+                HapticFeedbackConstants.VIRTUAL_KEY,
+                HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+            )
             fragment.viewModelAdded.addPlace(place)
             if (fragment.viewModelAdded.isPlaceAdded(place)) {
                 Toast.makeText(fragment.context, "添加成功", Toast.LENGTH_SHORT).show()
