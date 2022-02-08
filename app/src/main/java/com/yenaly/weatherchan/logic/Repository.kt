@@ -2,12 +2,14 @@ package com.yenaly.weatherchan.logic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.amap.api.location.AMapLocationListener
 import com.yenaly.weatherchan.logic.dao.AddedPlaceDao
 import com.yenaly.weatherchan.logic.dao.PlaceDao
 import com.yenaly.weatherchan.logic.dao.SettingsDao
 import com.yenaly.weatherchan.logic.model.PlaceResponse
 import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.logic.network.WeatherChanNetwork
+import com.yenaly.weatherchan.logic.utility.CurrentLocation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -79,12 +81,20 @@ object Repository {
     fun getSettingsString(string: String, defValue: String) =
         SettingsDao.getSettingsString(string, defValue)
 
+    fun getOnceLocation(aMapLocationListener: AMapLocationListener) =
+        CurrentLocation.getOnceLocation(aMapLocationListener)
+
+    fun startLocation() = CurrentLocation.startLocation()
+
+    fun destroyLocation() = CurrentLocation.destroyLocation()
+
     /**
      * [fire]函数先调用[liveData]函数，再在[liveData]代码块中统一进行`try` `catch`处理，
      * 在`try`语句调用传入的Lambda表达式中代码，最后获取Lambda表达式的执行结果，
      * 并调用`emit()`方法发射出去。
      *
-     * [CoroutineContext]默认值为[Dispatchers.IO]（子线程）。
+     * @param context [CoroutineContext]默认值为[Dispatchers.IO]（子线程）。
+     * @param block 要执行的代码块。
      */
     private fun <T> fire(
         context: CoroutineContext = Dispatchers.IO,

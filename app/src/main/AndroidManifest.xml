@@ -39,8 +39,8 @@
 
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_settings"
+            android:exported="true"
+            android:label="@string/settings"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.weather.WeatherActivity"

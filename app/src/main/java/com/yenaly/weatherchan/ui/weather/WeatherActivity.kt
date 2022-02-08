@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +21,8 @@ import com.yenaly.weatherchan.databinding.ActivityWeatherNewBinding
 import com.yenaly.weatherchan.logic.model.Sky
 import com.yenaly.weatherchan.logic.model.Weather
 import com.yenaly.weatherchan.ui.settings.SettingsActivity
+import com.yenaly.weatherchan.utils.TextViewUtils
+import com.yenaly.weatherchan.utils.ToastUtils.showShortToast
 import com.yenaly.weatherchan.ui.weather.adapter.ViewPagerAdapter
 import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 
@@ -81,7 +82,7 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
             if (weather != null) {
                 showWeather(weather)
             } else {
-                Toast.makeText(this, "无法成功获取天气信息", Toast.LENGTH_SHORT).show()
+                "无法成功获取天气信息".showShortToast()
                 result.exceptionOrNull()?.printStackTrace()
             }
             binding.swipeRefreshLayout.isRefreshing = false
@@ -111,7 +112,10 @@ class WeatherActivity : AppCompatActivity(), DrawerLayout.DrawerListener {
 
         //隐藏ToolBar的title。ToolBar居中显示城市名称。
         binding.toolBar.title = ""
-        binding.placeName.text = viewModel.placeName
+        binding.placeName.apply {
+            text = viewModel.placeName
+            TextViewUtils.makeTextMarquee(this)
+        }
 
         val unitOfTemperature = if (viewModel.getSettingsString(
                 resources.getString(R.string.units),

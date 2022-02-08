@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.yenaly.weatherchan.databinding.RealtimeWeatherDetailedBinding
 import com.yenaly.weatherchan.logic.model.Weather
+import com.yenaly.weatherchan.utils.TextViewUtils
 import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
 
 /**
@@ -54,21 +55,24 @@ class RealtimeDetailedFragment : Fragment() {
         val cloudrateText = weather.realtime.cloudrate
         val pressureText = weather.realtime.pressure
         val visibilityText = weather.realtime.visibility
-        val windText = "${weather.realtime.wind.direction}° / ${weather.realtime.wind.speed}"
         val carWashingText = weather.daily.lifeIndex.carWashing[0].desc
         val coldRiskText = weather.daily.lifeIndex.coldRisk[0].desc
         val dressingText = weather.daily.lifeIndex.dressing[0].desc
         val uvText = weather.daily.lifeIndex.ultraviolet[0].desc
+        val windText = "${weather.realtime.wind.direction}° / ${weather.realtime.wind.speed}"
         binding.realtimeWeatherIndexLayout.humidityText.text = humidityText.toString()
         binding.realtimeWeatherIndexLayout.precipitationText.text = precipitationText.toString()
         binding.realtimeWeatherIndexLayout.cloudrateText.text = cloudrateText.toString()
         binding.realtimeWeatherIndexLayout.pressureText.text = pressureText.toString()
         binding.realtimeWeatherIndexLayout.visibilityText.text = visibilityText.toString()
-        binding.realtimeWeatherIndexLayout.windText.text = windText
         binding.realtimeWeatherLifeIndexLayout.carWashingText.text = carWashingText
         binding.realtimeWeatherLifeIndexLayout.coldRiskText.text = coldRiskText
         binding.realtimeWeatherLifeIndexLayout.dressingText.text = dressingText
         binding.realtimeWeatherLifeIndexLayout.uvText.text = uvText
+        binding.realtimeWeatherIndexLayout.windText.apply {
+            text = windText
+            TextViewUtils.makeTextMarquee(this)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

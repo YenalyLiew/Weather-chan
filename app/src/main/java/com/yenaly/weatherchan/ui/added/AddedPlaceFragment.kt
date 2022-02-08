@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.databinding.FragmentAddedPlaceBinding
 import com.yenaly.weatherchan.ui.place.PlaceViewModel
 
@@ -25,11 +26,6 @@ class AddedPlaceFragment : Fragment() {
     private lateinit var adapter: AddedPlaceAdapter
     private var _binding: FragmentAddedPlaceBinding? = null
     private val binding get() = _binding!!
-
-    companion object {
-        //错误信息以及问题信息。
-        private const val tipOne = "未添加任何地区"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +58,7 @@ class AddedPlaceFragment : Fragment() {
                 binding.addedTipText.visibility = View.GONE
             } else {
                 binding.recyclerView.visibility = View.GONE
-                binding.addedTipText.text = tipOne
+                binding.addedTipText.text = resources.getString(R.string.have_not_added_any_places)
                 binding.addedTipText.visibility = View.VISIBLE
             }
         }

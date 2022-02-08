@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.PlaceResponse
+import com.yenaly.weatherchan.utils.TextViewUtils
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
 
 /**
@@ -40,7 +41,10 @@ class AddedPlaceAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.addedPlaceName.text = listAddedPlace[position].name
+        holder.addedPlaceName.apply {
+            text = listAddedPlace[position].name
+            TextViewUtils.makeTextMarquee(this)
+        }
         holder.addedPlaceAddress.text = listAddedPlace[position].address
         holder.deleteButton.setOnClickListener {
             it.isHapticFeedbackEnabled = true

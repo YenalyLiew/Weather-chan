@@ -6,9 +6,9 @@ import com.yenaly.weatherchan.WeatherChanApplication
 
 /**
  * @ProjectName : Weather-chan
- * @Author : 作者
+ * @Author : Yenaly Liew
  * @Time : 2022/02/06 006 18:58
- * @Description : 文件描述
+ * @Description : 设置功能。
  */
 object SettingsDao {
 

@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Weather-chan</string>
     <string name="amap_api_key" translatable="false">4564b22ab8896c328671fba23cc81541</string>
 
@@ -23,6 +24,7 @@
     <string name="fahrenheit">℉</string>
     <string name="today">今日</string>
     <string name="future">未来</string>
+    <string name="current_location">当前定位</string>
 
     <string name="added_places_list">添加城市列表</string>
     <string name="settings">设置</string>
@@ -31,20 +33,12 @@
     <string name="imperial">英制 (℉)</string>
     <string name="metric">公制 (℃)</string>
 
-    <string name="title_activity_settings">SettingsActivity</string>
+    <!--错误信息和问题信息-->
+    <string name="cannot_find_out_the_place">未能查询到该地点</string>
+    <string name="have_not_added_any_places">未添加任何地区</string>
+    <string name="amap_location_error_9">定位初始化时出现异常\n请重新启动定位</string>
+    <string name="amap_location_error_12">缺少定位权限\n请在设备的设置中开启app的定位权限</string>
+    <string name="amap_location_error_13">定位失败，由于未获得WIFI列表和基站信息，且GPS当前不可用\n建议检查权限是否开启</string>
+    <string name="amap_location_error_else">定位出现异常，请稍后再试</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

@@ -6,9 +6,9 @@ import com.yenaly.weatherchan.R
 
 /**
  * @ProjectName : Weather-chan
- * @Author : 作者
+ * @Author : Yenaly Liew
  * @Time : 2022/02/06 006 11:57
- * @Description : 文件描述
+ * @Description : 设置的Fragment。
  */
 class SettingsFragment : PreferenceFragmentCompat() {
 

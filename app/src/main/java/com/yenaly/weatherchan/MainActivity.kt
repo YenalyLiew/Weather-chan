@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.amap.api.location.AMapLocationClient
+import com.amap.api.location.AMapLocationClientOption
 import com.yenaly.weatherchan.ui.place.PlaceSearchFragment
 
 /**
@@ -34,6 +36,10 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .replace(R.id.place_search_fragment, PlaceSearchFragment())
                 .commit()
+
+        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTPS)
+        AMapLocationClient.updatePrivacyAgree(WeatherChanApplication.context, true)
+        AMapLocationClient.updatePrivacyShow(WeatherChanApplication.context, true, true)
     }
 
     override fun onRequestPermissionsResult(

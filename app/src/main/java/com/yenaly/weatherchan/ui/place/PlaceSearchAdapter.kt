@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.yenaly.weatherchan.R
 import com.yenaly.weatherchan.logic.model.PlaceResponse
+import com.yenaly.weatherchan.utils.TextViewUtils
+import com.yenaly.weatherchan.utils.ToastUtils.showShortToast
 import com.yenaly.weatherchan.ui.weather.WeatherActivity
 
 /**
@@ -46,10 +47,10 @@ class PlaceSearchAdapter(
 
         //搜索栏第一个IP定位地区的Card颜色加深并且取消添加按钮。
         if (position == 0 &&
-            fragment.viewModelIP.currentCity.isNotEmpty() &&
-            fragment.viewModelIP.currentLng.isNotEmpty() &&
-            fragment.viewModelIP.currentLat.isNotEmpty() &&
-            fragment.viewModelIP.currentProvince.isNotEmpty()
+            fragment.viewModelCurrentPlace.currentCity.isNotEmpty() &&
+            fragment.viewModelCurrentPlace.currentLng.isNotEmpty() &&
+            fragment.viewModelCurrentPlace.currentLat.isNotEmpty() &&
+            fragment.viewModelCurrentPlace.currentProvince.isNotEmpty()
         ) {
 
             //判断当前是否为夜间模式
@@ -71,12 +72,15 @@ class PlaceSearchAdapter(
             )
             fragment.viewModelAdded.addPlace(place)
             if (fragment.viewModelAdded.isPlaceAdded(place)) {
-                Toast.makeText(fragment.context, "添加成功", Toast.LENGTH_SHORT).show()
+                 "添加成功".showShortToast()
                 holder.addButton.visibility = View.GONE
                 fragment.viewModelAdded.refreshPlaces()
             }
         }
-        holder.placeName.text = place.name
+        holder.placeName.apply {
+            text = place.name
+            TextViewUtils.makeTextMarquee(this)
+        }
         holder.placeAddress.text = place.address
         holder.itemView.setOnClickListener {
             fragment.viewModelSearch.savePlace(place)
