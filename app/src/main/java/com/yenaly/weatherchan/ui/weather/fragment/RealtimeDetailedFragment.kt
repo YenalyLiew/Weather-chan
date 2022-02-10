@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.yenaly.weatherchan.databinding.RealtimeWeatherDetailedBinding
 import com.yenaly.weatherchan.logic.model.Weather
-import com.yenaly.weatherchan.ui.weather.WeatherActivity
 import com.yenaly.weatherchan.ui.weather.adapter.HourlyWeatherAdapter
 import com.yenaly.weatherchan.utils.TextViewUtils
 import com.yenaly.weatherchan.ui.weather.viewmodel.WeatherViewModel
@@ -58,7 +56,6 @@ class RealtimeDetailedFragment : Fragment() {
         binding.hourlyWeatherLayout.hourlyItemRv.layoutManager = layoutManager
         val adapter = HourlyWeatherAdapter(this, weather)
         binding.hourlyWeatherLayout.hourlyItemRv.adapter = adapter
-
 
         val humidityText = weather.realtime.humidity
         val precipitationText = weather.realtime.precipitation.local.intensity
