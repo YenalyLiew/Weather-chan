@@ -23,6 +23,7 @@
     <string name="celsius">℃</string>
     <string name="fahrenheit">℉</string>
     <string name="today">今日</string>
+    <string name="tomorrow">翌日</string>
     <string name="future">未来</string>
     <string name="current_location">当前定位</string>
 

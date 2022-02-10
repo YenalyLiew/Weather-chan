@@ -10,6 +10,7 @@ import java.io.Serializable
  */
 
 class Weather(
+    val hourly: HourlyWeatherResponse.Result.Hourly,
     val realtime: RealtimeWeatherResponse.Result.Realtime,
     val daily: DailyWeatherResponse.Result.Daily
 ) : Serializable

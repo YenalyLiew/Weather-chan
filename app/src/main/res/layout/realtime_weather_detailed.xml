@@ -5,6 +5,10 @@
     android:orientation="vertical">
 
     <include
+        android:id="@+id/hourly_weather_layout"
+        layout="@layout/realtime_weather_hourly" />
+
+    <include
         android:id="@+id/realtime_weather_index_layout"
         layout="@layout/realtime_weather_index" />
 

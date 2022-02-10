@@ -2,6 +2,7 @@ package com.yenaly.weatherchan.logic.network
 
 import com.yenaly.weatherchan.WeatherChanApplication
 import com.yenaly.weatherchan.logic.model.DailyWeatherResponse
+import com.yenaly.weatherchan.logic.model.HourlyWeatherResponse
 import com.yenaly.weatherchan.logic.model.RealtimeWeatherResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -31,4 +32,10 @@ interface WeatherService {
         @Query("unit") unit: String?
     ): Call<DailyWeatherResponse>
 
+    @GET("v2.5/${WeatherChanApplication.TOKEN}/{lng},{lat}/hourly.json?hourlysteps=24")
+    fun getHourlyWeather(
+        @Path("lng") lng: String,
+        @Path("lat") lat: String,
+        @Query("unit") unit: String?
+    ): Call<HourlyWeatherResponse>
 }

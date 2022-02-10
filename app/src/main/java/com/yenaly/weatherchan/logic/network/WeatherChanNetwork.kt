@@ -25,4 +25,7 @@ object WeatherChanNetwork {
     suspend fun getDailyWeather(lng: String, lat: String, unit: String?) =
         weatherService.getDailyWeather(lng, lat, unit).await()
 
+    suspend fun getHourlyWeather(lng: String, lat: String, unit: String?) =
+        weatherService.getHourlyWeather(lng, lat, unit).await()
+
 }
