@@ -12,6 +12,13 @@ Weather-chan的功能有：
 5. 显示天气资讯，如穿衣指数，紫外线指数等。
 6. 支持夜间模式。
 
+## 截图示例
+![Screenshot_2022-02-12-20-41-23-067_com yenaly wea](https://user-images.githubusercontent.com/92662107/153711830-b0ed73dd-65dc-4c45-9d22-595bce013af7.jpg)
+![Screenshot_2022-02-12-20-41-36-239_com yenaly wea](https://user-images.githubusercontent.com/92662107/153711834-1125192a-2dbd-429b-bcde-6f6c6925e594.jpg)
+![Screenshot_2022-02-12-20-41-58-385_com yenaly wea](https://user-images.githubusercontent.com/92662107/153711840-b40f0f59-13e0-4b9a-9f7a-4d800dfd5175.jpg)
+![Screenshot_2022-02-12-20-41-28-376_com yenaly wea](https://user-images.githubusercontent.com/92662107/153711847-69279335-a24a-43b1-8373-0848fc0393c4.jpg)
+![Screenshot_2022-02-12-20-41-31-928_com yenaly wea](https://user-images.githubusercontent.com/92662107/153711852-0f956d6c-ee0f-4b81-898b-3949b578e0e6.jpg)
+
 ## 最低配置要求
 Android 5.0
 
